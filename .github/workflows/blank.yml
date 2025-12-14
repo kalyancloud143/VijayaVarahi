@@ -118,3 +118,11 @@ git push -u origin main
 </body>
 </html>
 
+Build Command: pip install -r requirements.txt
+Start Command: gunicorn config.wsgi
+
+DJANGO_SETTINGS_MODULE=config.settings
+
+python manage.py collectstatic
+
+
