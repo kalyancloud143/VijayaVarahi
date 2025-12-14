@@ -91,3 +91,30 @@ git commit -m "Initial Vijayavarahi website"
 git branch -M main
 git remote add origin https://github.com/yourusername/vijayavarahi.git
 git push -u origin main
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vijayavarahi Consultancy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Vijayavarahi</a>
+    <div>
+      <a class="btn btn-warning" href="/contact/">Request Consultation</a>
+    </div>
+  </div>
+</nav>
+
+<section class="container text-center mt-5">
+  <h1>Strategic Consulting That Drives Business Impact</h1>
+  <p class="lead">
+    We help banks and enterprises optimize operations, manage risk, and accelerate growth.
+  </p>
+</section>
+
+</body>
+</html>
+
