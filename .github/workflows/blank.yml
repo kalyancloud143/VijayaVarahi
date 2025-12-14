@@ -1,36 +1,93 @@
-# This is a basic workflow to help you get started with Actions
+mkdir vijayavarahi_website
+cd vijayavarahi_website
 
-name: CI
+python -m venv venv
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+venv\Scripts\activate
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+pip install django whitenoise gunicorn
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+django-admin startproject config .
+django-admin startapp core
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+vijayavarahi_website/
+│
+├── core/
+│   ├── templates/
+│   │   ├── core/
+│   │   │   ├── home.html
+│   │   │   ├── about.html
+│   │   │   ├── services.html
+│   │   │   ├── contact.html
+│   ├── views.py
+│   ├── urls.py
+│
+├── config/
+│   ├── settings.py
+│   ├── urls.py
+│
+├── static/
+│   ├── css/style.css
+│
+├── manage.py
+└── requirements.txt
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'core',
+]
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    ...
+]
+
+ALLOWED_HOSTS = ['*']  # later update for domain
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),
+]
+
+from django.shortcuts import render
+
+def home(request):
+    return render(request, 'core/home.html')
+
+def about(request):
+    return render(request, 'core/about.html')
+
+def services(request):
+    return render(request, 'core/services.html')
+
+def contact(request):
+    return render(request, 'core/contact.html')
+
+    python manage.py migrate
+python manage.py runserver
+
+http://127.0.0.1:8000/
+
+pip freeze > requirements.txt
+
+web: gunicorn config.wsgi
+
+git init
+git add .
+git commit -m "Initial Vijayavarahi website"
+git branch -M main
+git remote add origin https://github.com/yourusername/vijayavarahi.git
+git push -u origin main
